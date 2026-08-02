@@ -1,0 +1,13 @@
+{
+  "name": "lms-with-js(nexus-acadmey)",
+  "version": "1.0.0",
+  "description": "Library Management System using JavaScript",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
