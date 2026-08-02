@@ -11,6 +11,12 @@ export function isValidYear(year) {
   return Number.isInteger(year) && year > 0 && year <= currentYear;
 }
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function isValidEmail(email) {
+  return isNonEmpty(email) && EMAIL_REGEX.test(email);
+}
+
 export function ValidateBook(Book, Books) {
   const errors = [];
 
@@ -36,6 +42,34 @@ export function ValidateBook(Book, Books) {
 
   if (!isPositive(Book.totalCopies))
     errors.push("Total copies must be positive!");
+
+  return { valid: errors.length === 0, errors };
+}
+
+export function validateNewMember(member, Members) {
+  const errors = [];
+
+  if (!isPositive(member.id))
+    errors.push("Member id must be a positive integer.");
+  else if (Members.some((m) => m.id === member.id))
+    errors.push(`Member id ${member.id} already exists.`);
+
+  if (!isNonEmpty(member.firstName))
+    errors.push("First name is required.");
+  if (!isNonEmpty(member.lastName)) errors.push("Last name is required.");
+
+  if (!isValidEmail(member.email)) errors.push("A valid email is required.");
+  else if (
+    Members.some((m) => m.email.toLowerCase() === member.email.toLowerCase())
+  ) {
+    errors.push(`Email ${member.email} is already registered.`);
+  }
+
+  if (member.phone !== undefined) {
+    if (!isNonEmpty(member.phone)) errors.push("Phone is required.");
+    else if (Members.some((m) => m.phone === member.phone))
+      errors.push(`Phone ${member.phone} is already registered.`);
+  }
 
   return { valid: errors.length === 0, errors };
 }
