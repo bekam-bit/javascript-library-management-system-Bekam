@@ -5,3 +5,7 @@ export function formatBook(book) {
 export function formatMember(member) {
   return `[${member.id}] ${member.firstName} ${member.lastName} <${member.email}> — ${member.borrowedBooks.length} book(s) borrowed`;
 }
+
+export function todayISO(){
+    return new Date().toISOString().split("T")[0];
+}

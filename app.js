@@ -16,6 +16,8 @@ import {
 
 import { formatBook, formatMember } from "./utils/helpers.js";
 
+import { borrowBook, returnBook } from "./services/borrowService.js";
+
 function section(title) {
   console.log(`\n=== ${title} ===`);
 }
@@ -80,3 +82,30 @@ try {
 } catch (err) {
   console.log("\nDelete failed:", err.message);
 }
+
+// Borrow & Return Workflow
+section("Borrow & Return");
+ 
+try {
+  const record = borrowBook(102, 2); 
+  console.log("Borrowed:", record);
+} catch (err) {
+  console.log("Borrow failed:", err.message);
+}
+ 
+try {
+  borrowBook(102, 2); 
+} catch (err) {
+  console.log("Expected failure (duplicate borrow):", err.message);
+}
+ 
+console.log("\nBooks after borrow:");
+getAllBooks().forEach((b) => console.log("  " + formatBook(b)));
+ 
+try {
+  const record = returnBook(102, 2);
+  console.log("\nReturned:", record);
+} catch (err) {
+  console.log("\nReturn failed:", err.message);
+}
+
