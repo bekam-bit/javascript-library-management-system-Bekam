@@ -54,12 +54,12 @@ export function updateMember(id, updates) {
   if (!member) throw new Error(`Cannot update: no member found with id ${id}.`);
 
   if (updates.firstName !== undefined) {
-    if (!isNonEmptyString(updates.firstName))
+    if (!isNonEmpty(updates.firstName))
       throw new Error("First name is requires!");
     member.firstName = updates.firstName;
   }
   if (updates.lastName !== undefined) {
-    if (!isNonEmptyString(updates.lastName))
+    if (!isNonEmpty(updates.lastName))
       throw new Error("Last name is required!");
     member.lastName = updates.lastName;
   }

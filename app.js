@@ -14,6 +14,15 @@ import {
   deleteMember,
 } from "./services/memberService.js";
 
+import {
+  libraryAnalytics,
+  totalBooksPerCategory,
+  getMostBorrowedCategory,
+  getBooksPublishedAfter,
+  getUnavailableBooks,
+  getMembersWithActiveBorrows,
+} from "./services/reportService.js";
+
 import { formatBook, formatMember } from "./utils/helpers.js";
 
 import { borrowBook, returnBook } from "./services/borrowService.js";
@@ -109,3 +118,37 @@ try {
   console.log("\nReturn failed:", err.message);
 }
 
+try {
+  const record = borrowBook(103, 4); 
+  console.log("\nBorrowed:", record);
+} catch (err) {
+  console.log("\nBorrow failed:", err.message);
+}
+ 
+console.log("\nBooks after second borrow:");
+getAllBooks().forEach((b) => console.log("  " + formatBook(b)));
+
+// Reports & Statistics
+section("Reports & Statistics");
+ 
+console.log("Library statistics:", libraryAnalytics());
+console.log("Category insights:", totalBooksPerCategory());
+console.log("Most borrowed category:", getMostBorrowedCategory());
+console.log("Books published after 2010:", getBooksPublishedAfter(2010).map((b) => b.title));
+console.log("Unavailable books:", getUnavailableBooks().map((b) => b.title));
+console.log("Members with active borrows:", getMembersWithActiveBorrows().map((m) => `${m.firstName} ${m.lastName}`));
+
+
+// Member Deletion Protection Demo
+section("Deletion Protection Demo");
+ 
+try {
+  borrowBook(102, 3); 
+  deleteMember(102); 
+} catch (err) {
+  console.log("Can not delete, Member has active borrow:", err.message);
+}
+ 
+returnBook(102, 3);
+const removed = deleteMember(102);
+console.log("Deleted member after return:", `${removed.firstName} ${removed.lastName}`);

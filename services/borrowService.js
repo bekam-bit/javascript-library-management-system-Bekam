@@ -61,6 +61,6 @@ export function returnBook(memberId, bookId) {
   return record || { memberId, bookId, returned: true };
 }
 
-export function getActiveBorrows(){
-    return borrowedBooks.filter((r) => !r.returned);
+export function getActiveBorrows() {
+  return borrowRecords.filter((r) => !r.returned);
 }
