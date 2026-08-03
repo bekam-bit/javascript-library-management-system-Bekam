@@ -1,6 +1,6 @@
 # Library Management System
 
-**Full Name:** _[Bekam Yoseph]_
+**Full Name:** _Bekam Yoseph_
 
 A console-based Library Management System built with **vanilla JavaScript** and **Node.js ES Modules**. All state lives in memory and every feature is demonstrated by calling functions directly in `app.js`.
 
